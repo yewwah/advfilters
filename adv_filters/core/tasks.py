@@ -7,5 +7,5 @@ def test(param):
     return 'The test task executed with argument "%s" ' % param
 
 @shared_task(name="test2")
-def test2(param):
-    return 'The test task executed with argument "%s" ' % param
+def test2(param, job_id):
+	return 'The test task executed with argument "%s" ' % param

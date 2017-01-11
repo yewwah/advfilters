@@ -9,12 +9,16 @@ myapp = apps.get_app_config('django_celery_results')
 TASK_MODEL = myapp.models['taskresult']
 
 def tasks_view(request):
-    print 'tasks'
     tasks = TASK_MODEL.objects.all()
-    print 'in tasks view'
-    print tasks[0]
-    print tasks[0].status
-    return render(request, 'saved.html', {'tasks': tasks})
+    lst = []
+    for task in tasks:
+        print task.id
+        print task.status
+        c = Document.objects.get(pk = task.id)
+        c.status = task.status
+        c.save()
+        lst.append(c)
+    return render(request, 'saved.html', {'tasks': lst})
 
 def SaveDocument(request):
     saved = False
@@ -26,12 +30,10 @@ def SaveDocument(request):
             document = Document()
             document.name = MyDocumentForm.cleaned_data["name"]
             document.doc = request.FILES["document"]
-            try:
-                document.save()
-            
-                test2.delay(document.name)
-            except:
-                import traceback; traceback.print_exc()
+            task = test2.delay(document.name, document.id)
+            document.status = task.status
+            document.task_id = task.id
+            document.save()        
             print 'completed celery tasks'
             saved = True
 
