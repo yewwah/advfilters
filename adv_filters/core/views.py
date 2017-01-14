@@ -10,14 +10,15 @@ TASK_MODEL = myapp.models['taskresult']
 
 def tasks_view(request):
     tasks = TASK_MODEL.objects.all()
+
     lst = []
     for task in tasks:
-        print task.id
-        print task.status
-        c = Document.objects.get(pk = task.id)
-        c.status = task.status
-        c.save()
-        lst.append(c)
+        print task.task_id
+        item = Document.objects.filter(task_id = task.task_id)
+        for c in item:
+            c.status = task.status
+            c.save()
+            lst.append(c)
     return render(request, 'saved.html', {'tasks': lst})
 
 def SaveDocument(request):
@@ -32,7 +33,7 @@ def SaveDocument(request):
             document.doc = request.FILES["document"]
             task = test2.delay(document.name, document.id)
             document.status = task.status
-            document.task_id = task.id
+            document.task_id = task.task_id
             document.save()        
             print 'completed celery tasks'
             saved = True

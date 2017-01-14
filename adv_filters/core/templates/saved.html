@@ -1,8 +1,13 @@
 <html>
    <body>
-   
-      {% for task in tasks %}
-         <strong> {{task.status}}</strong>
-      {% endfor %}
+   		<table>
+   			{% for task in tasks %}
+         	<tr><td><strong> name {{task.name}}</strong></td>         	
+         	<td><strong> date {{task.date_created}}</strong></td>
+         	<td><strong> status  {{task.status}}</strong></td>
+         	<td><strong> id {{task.id}}</strong></td></tr>
+      		{% endfor %}
+   		</table>
+      
    </body>
 </html>
