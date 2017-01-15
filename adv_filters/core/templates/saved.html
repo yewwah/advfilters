@@ -7,7 +7,7 @@
          	<td><strong> status  {{task.status}}</strong></td>
          	<td><strong> id {{task.id}}</strong></td>
          	<td><strong> input file {{task.input_file_path}}<td>
-         	<td><h1><a href="{% url 'test' pk=task.pk %}">output</a></h1></td></tr>
+         	<td><a href="{% url 'test' pk=task.pk %}">output</a></td></tr>
       		{% endfor %}
    		</table>
       
