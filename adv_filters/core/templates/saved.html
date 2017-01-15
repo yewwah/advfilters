@@ -5,7 +5,9 @@
          	<tr><td><strong> name {{task.name}}</strong></td>         	
          	<td><strong> date {{task.date_created}}</strong></td>
          	<td><strong> status  {{task.status}}</strong></td>
-         	<td><strong> id {{task.id}}</strong></td></tr>
+         	<td><strong> id {{task.id}}</strong></td>
+         	<td><strong> input file {{task.input_file_path}}<td>
+         	<td><h1><a href="{% url 'test' pk=task.pk %}">output</a></h1></td></tr>
       		{% endfor %}
    		</table>
       

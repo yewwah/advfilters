@@ -13,10 +13,10 @@ def tasks_view(request):
 
     lst = []
     for task in tasks:
-        print task.task_id
         item = Document.objects.filter(task_id = task.task_id)
         for c in item:
             c.status = task.status
+            print c.output_file_path
             c.save()
             lst.append(c)
     return render(request, 'saved.html', {'tasks': lst})
@@ -34,10 +34,9 @@ def SaveDocument(request):
             task = test2.delay(document.name, document.id)
             document.status = task.status
             document.task_id = task.task_id
+            document.input_file_path = 'input_files/' + document.doc.name
+            document.output_file_path = 'input_files/' + document.doc.name
             document.save()        
-            print 'completed celery tasks'
-            saved = True
-
             return redirect('tasks_view')
         else:
             print 'Fails'
@@ -45,3 +44,8 @@ def SaveDocument(request):
         MyDocumentForm = DocumentForm()
 
     return render(request, 'saved.html', locals())
+
+def test(request, pk):
+    print 'inside request'
+    return redirect('home')
+    
