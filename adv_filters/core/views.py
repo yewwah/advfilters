@@ -11,7 +11,7 @@ import os
 
 def TasksView(request):
     item = Document.objects.all()
-    return render(request, 'saved.html', {'tasks': item})
+    return render(request, 'results.html', {'tasks': item})
 
 def SaveDocument(request):
     saved = False
@@ -34,7 +34,7 @@ def SaveDocument(request):
     else:
         MyDocumentForm = DocumentForm()
 
-    return render(request, 'saved.html', locals())
+    return render(request, 'results.html', locals())
 
 
 def download(request, pk):
