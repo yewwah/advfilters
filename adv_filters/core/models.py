@@ -8,6 +8,7 @@ class Document(models.Model):
     doc = models.FileField(upload_to='input_files')
     status = models.CharField(max_length = 100, blank = True)
     task_id = models.CharField(max_length = 100, blank = True)
+    task_status = models.CharField(max_length = 100)
     input_file_path = models.CharField(max_length = 100, blank = True)
     output_file_path = models.CharField(max_length = 100, blank=True)
     name = models.CharField(max_length = 100, blank=True)
