@@ -14,10 +14,8 @@ def TasksView(request):
     return render(request, 'results.html', {'tasks': item})
 
 def SaveDocument(request):
-    saved = False
     if request.method == "POST":
         # Get the posted form
-        print 'Uploading File'
         MyDocumentForm = DocumentForm(request.POST, request.FILES)
         if MyDocumentForm.is_valid():
             document = Document()
@@ -30,11 +28,11 @@ def SaveDocument(request):
             task = cluster.delay(document.name, document.id)
             return redirect('TasksView')
         else:
-	        print 'Fails'
+            return render(request, 'index.html', {'form': MyDocumentForm})
     else:
         MyDocumentForm = DocumentForm()
-
-    return render(request, 'results.html', locals())
+        return render(request, 'index.html', {'form': MyDocumentForm})
+    return render(request, 'results.html')
 
 
 def download(request, pk):
